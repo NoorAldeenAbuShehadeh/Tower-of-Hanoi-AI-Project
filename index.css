@@ -1,0 +1,71 @@
+body{
+    margin: 0 auto;   
+    
+}
+
+.header{
+    display: flex;
+    /* background-color: aqua; */
+    border: solid 1px red;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.header p:nth-child(1){
+    font-size: 20px;
+}
+.header div:nth-child(2){
+    padding: 5px 10px;
+    font-size: 20px;
+    background-color: #d8e9ff;
+    border-radius: 5px; 
+}
+.btn{
+    padding: 5px 10px;
+    font-size: 20px;
+    background-color: #d8e9ff;
+    border-radius: 5px;   
+}
+
+.mov-num{
+    font-size: 20px;
+}
+/* ******************************************************* */
+.paly-body{
+    display: flex;
+    column-gap: 20px;
+    padding-top: 100px;
+    justify-content: center;
+}
+.tour{
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative ;
+}
+.vertical{
+    background-color: #dd4433;
+    width: 5px;
+    height: 300px;
+    /* display: flex; */
+}
+.horizontal{
+    background-color: #dd4433;
+    width: 300px;
+    height: 5px;
+}
+
+.ring{
+    width: 200px;
+    height: 30px;
+    background-color: purple;
+    border-radius: 20px;
+    margin-top: 2px;
+    
+}
+.ring-container{
+    position: absolute;
+    bottom: 5px;
+}
