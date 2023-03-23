@@ -42,8 +42,8 @@ function dragEnd(){
     dragItem = null;
 }
 function checkEndGame(){
-    console.log(Number(numRing.innerText));
-    console.log(tours[2])
+    // console.log(Number(numRing.innerText));
+    // console.log(tours[2])
     let getGoal= true;
         for (let i = 0 ; i < tours[2].children.length -1 ; i++)
         {
@@ -51,8 +51,8 @@ function checkEndGame(){
             firstEl = Number(firstEl.substring(0,firstEl.length-2))
             let secoundEl = tours[2].children[i+1].style.width;
             secoundEl = Number(secoundEl.substring(0,secoundEl.length-2))
-            console.log('firstEl------------------',firstEl);
-            console.log('secoundEl',secoundEl);
+            // console.log('firstEl------------------',firstEl);
+            // console.log('secoundEl',secoundEl);
             if(firstEl > secoundEl)
             {
                 getGoal=false;
