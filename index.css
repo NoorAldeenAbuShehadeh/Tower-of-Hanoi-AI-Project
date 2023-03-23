@@ -76,3 +76,7 @@ body{
     height: 100%;
     justify-content: flex-end;
 }
+/* *****************  */
+.work-status{
+    font-size: 30px;
+}

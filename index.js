@@ -1,5 +1,7 @@
-let rings = document.getElementsByClassName('ring')
-let tours = document.getElementsByClassName('ring-container')
+const rings = document.getElementsByClassName('ring')
+const tours = document.getElementsByClassName('ring-container')
+const numRing = document.getElementById('num-ring')
+const workStatus = document.getElementById('work-status')
 let dragItem = null 
 
 function ringListener(ringObj){
@@ -24,7 +26,7 @@ function initListener(){
 //Listener Event
 function dragStart(){
     dragItem = this;
-    console.log(this)
+    // console.log(this)
     setTimeout(()=>this.style.display ='none',0);
 }
 function dragEnd(){
@@ -46,24 +48,20 @@ function dragLeave(){
     this.style.border = 'none'
 }
 //End Listener Event
-console.log(rings)
-console.log(tours)
 
 // ************
-initListener()
 function initRing(){
 
     rings[0].style.width ="50px"
     rings[1].style.width ="80px"
     rings[2].style.width ="110px"
 }
-initRing()
 function addRing()
 {
-    const numRing = document.getElementById('num-ring')
     if (numRing.innerText < 6 )
     {
         numRing.innerText++;
+        workStatus.innerHTML='add new Ring'
         let tmp = rings[2].cloneNode(true)
         ringListener(tmp);
         if(numRing.innerText == 4 )
@@ -83,11 +81,25 @@ function addRing()
         
     }
     else{
-        
+        workStatus.innerHTML='maximum num of Ring 6'
     }
     
 }
 
 function removeRing(){
-    console.log('remobe');
+    if (numRing.innerText >= 4 )
+    {
+        numRing.innerText--;
+        workStatus.innerHTML='remove Ring'
+        let lastElementFirstTour = tours[0].children[tours[0].children.length-1]
+        lastElementFirstTour.remove()
+        
+    }
+    else{
+        workStatus.innerHTML='minimum num of Ring 3'
+    }
 }
+
+// ****************************************************** main Execute ****************************************//
+initListener()
+initRing()
