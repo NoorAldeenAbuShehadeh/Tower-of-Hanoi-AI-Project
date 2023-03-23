@@ -37,7 +37,7 @@ body{
 .paly-body{
     display: flex;
     column-gap: 20px;
-    padding-top: 100px;
+    padding-top: 20px;
     justify-content: center;
 }
 .tour{
@@ -81,4 +81,18 @@ body{
 /* *****************  */
 .work-status{
     font-size: 30px;
+}
+
+/* ******** */
+.transitionArea{
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+}
+.area{
+    height: 35px;
+    display: flex;
+    width: 350px;
+    border: green solid 1px;
+    justify-content: center;
 }

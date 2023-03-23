@@ -3,8 +3,11 @@ const tours = document.getElementsByClassName('ring-container')
 const numRing = document.getElementById('num-ring')
 const workStatus = document.getElementById('work-status')
 const movesNum = document.getElementById('moves-num')
+const solveBtn = document.getElementById('solve-btn')
+const areas = document.getElementsByClassName('area')
 let dragItem = null 
 let startGame = false
+
 
 function ringListener(ringObj){
     ringObj.addEventListener('dragstart',dragStart)
@@ -162,6 +165,30 @@ function removeRing(){
     }
 }
 
+function moveRing(tourStart,tourEnd){
+    let node = tours[tourStart].children[0]
+    // setTimeout(()=>node.style.display ='none',0);
+    
+    setTimeout(()=>{
+        node.style.display ='none'
+        areas[tourStart].append(node)
+        node.style.display ='block'
+    },500)
+    // setTimeout(()=>node.style.display ='block',500);
+    
+    // setTimeout(()=>this.style.display ='block',0);
+    setTimeout(()=>{
+        node.style.display ='none'
+        areas[tourEnd].append(node)
+        node.style.display ='block'
+    },1000)
+
+    setTimeout(()=>{
+        node.style.display ='none'
+        tours[tourEnd].prepend(node)
+        node.style.display ='block'
+    },1500)
+}
 // ****************************************************** main Execute ****************************************//
 initListener()
 initRing()
