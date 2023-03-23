@@ -25,17 +25,29 @@ function initListener(){
 
 //Listener Event
 function dragStart(){
-    dragItem = this;
-    // console.log(this)
-    setTimeout(()=>this.style.display ='none',0);
+    if(this === tours[0].children[0] || this === tours[1].children[0] ||this === tours[2].children[0])
+    {
+        console.log('ok move it');
+        dragItem = this;
+        setTimeout(()=>this.style.display ='none',0);
+    }
+    
 }
 function dragEnd(){
     
+    // console.log(this);
     setTimeout(()=>this.style.display ='block',0);
     dragItem = null;
 }
 function Drop(){
+    // console.log(dragItem);
+    if(!(dragItem == null)){
     this.prepend(dragItem) ;
+    workStatus.innerHTML='Move one Ring'
+    }
+    else{
+        console.log('filed move not in the top');
+    }
 }
 function dragOver(e){
     e.preventDefault();
