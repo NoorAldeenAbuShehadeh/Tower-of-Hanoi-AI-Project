@@ -2,7 +2,9 @@ const rings = document.getElementsByClassName('ring')
 const tours = document.getElementsByClassName('ring-container')
 const numRing = document.getElementById('num-ring')
 const workStatus = document.getElementById('work-status')
+const movesNum = document.getElementById('moves-num')
 let dragItem = null 
+let startGame = false
 
 function ringListener(ringObj){
     ringObj.addEventListener('dragstart',dragStart)
@@ -54,16 +56,18 @@ function Drop(){
         console.log('secoundEl',secoundEl);
         if(firstEl > secoundEl)
         {
-            
             correctMove=false
         }
     }
-    if((correctMove)){
+    if(correctMove){
     this.prepend(dragItem) ;
+    startGame = true;
+    movesNum.innerText = Number(movesNum.innerText)+1
     workStatus.innerHTML='Move one Ring'
     }
     else{
         console.log('filed move not in the top');
+        workStatus.innerHTML="Not correct move"
     }
 }
 function dragOver(e){
@@ -89,6 +93,7 @@ function addRing()
 {
     if (numRing.innerText < 6 )
     {
+        if(!startGame){
         numRing.innerText++;
         workStatus.innerHTML='add new Ring'
         let tmp = rings[2].cloneNode(true)
@@ -107,6 +112,10 @@ function addRing()
         }
         
         tours[0].append(tmp)
+        }
+        else{
+            workStatus.innerHTML="Game already started we can't add new ring"
+        }
         
     }
     else{
@@ -118,11 +127,14 @@ function addRing()
 function removeRing(){
     if (numRing.innerText >= 4 )
     {
+        if(!startGame){
         numRing.innerText--;
         workStatus.innerHTML='remove Ring'
         let lastElementFirstTour = tours[0].children[tours[0].children.length-1]
         lastElementFirstTour.remove()
-        
+        }else{
+            workStatus.innerHTML="Game already started we can't remove ring"
+        }
     }
     else{
         workStatus.innerHTML='minimum num of Ring 3'
