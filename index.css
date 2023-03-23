@@ -55,7 +55,7 @@ body{
 }
 .horizontal{
     background-color: #dd4433;
-    width: 300px;
+    width: 350px;
     height: 5px;
 }
 
@@ -74,7 +74,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px;
+    width: 250px;
     height: 100%;
     justify-content: flex-end;
 }

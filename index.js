@@ -41,6 +41,26 @@ function dragEnd(){
     setTimeout(()=>this.style.display ='block',0);
     dragItem = null;
 }
+function checkEndGame(){
+    console.log(Number(numRing.innerText));
+    console.log(tours[2])
+    let getGoal= true;
+        for (let i = 0 ; i < tours[2].children.length -1 ; i++)
+        {
+            let firstEl = tours[2].children[i].style.width;
+            firstEl = Number(firstEl.substring(0,firstEl.length-2))
+            let secoundEl = tours[2].children[i+1].style.width;
+            secoundEl = Number(secoundEl.substring(0,secoundEl.length-2))
+            console.log('firstEl------------------',firstEl);
+            console.log('secoundEl',secoundEl);
+            if(firstEl > secoundEl)
+            {
+                getGoal=false;
+                break;
+            }
+        }
+        if(getGoal && tours[2].children.length === Number(numRing.innerText)) workStatus.innerHTML="Congratulation we get a Goal"
+}
 function Drop(){
     let correctMove = true;
     if(dragItem == null)
@@ -69,6 +89,7 @@ function Drop(){
         console.log('filed move not in the top');
         workStatus.innerHTML="Not correct move"
     }
+    checkEndGame()
 }
 function dragOver(e){
     e.preventDefault();
@@ -85,9 +106,9 @@ function dragLeave(){
 // ************
 function initRing(){
 
-    rings[0].style.width ="50px"
-    rings[1].style.width ="80px"
-    rings[2].style.width ="110px"
+    rings[0].style.width ="35px"
+    rings[1].style.width ="70px"
+    rings[2].style.width ="105px"
 }
 function addRing()
 {
@@ -104,11 +125,11 @@ function addRing()
         }
         else if(numRing.innerText == 5 )
         {
-            tmp.style.width="180px"
+            tmp.style.width="175px"
         }
         else if(numRing.innerText == 6 )
         {
-            tmp.style.width="200px"
+            tmp.style.width="210px"
         }
         
         tours[0].append(tmp)
