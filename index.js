@@ -40,8 +40,25 @@ function dragEnd(){
     dragItem = null;
 }
 function Drop(){
-    // console.log(dragItem);
-    if(!(dragItem == null)){
+    let correctMove = true;
+    if(dragItem == null)
+    {
+        correctMove=false;
+    }
+    else if(this.children.length>0){
+        let firstEl = dragItem.style.width;
+        firstEl = Number(firstEl.substring(0,firstEl.length-2))
+        let secoundEl = this.children[0].style.width
+        secoundEl = Number(secoundEl.substring(0,secoundEl.length-2))
+        console.log('firstEl',firstEl);
+        console.log('secoundEl',secoundEl);
+        if(firstEl > secoundEl)
+        {
+            
+            correctMove=false
+        }
+    }
+    if((correctMove)){
     this.prepend(dragItem) ;
     workStatus.innerHTML='Move one Ring'
     }
