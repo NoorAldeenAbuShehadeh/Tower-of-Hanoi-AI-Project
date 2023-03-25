@@ -1,3 +1,5 @@
+import TowerOfHanoiGreedyAlgorithm from './Greedy.js'
+const Towers = [[6, 5, 4, 3, 2, 1], [], []];
 const rings = document.getElementsByClassName('ring')
 const tours = document.getElementsByClassName('ring-container')
 const numRing = document.getElementById('num-ring')
@@ -7,8 +9,8 @@ const solveBtn = document.getElementById('solve-btn')
 const areas = document.getElementsByClassName('area')
 let dragItem = null 
 let startGame = false
-
-
+const GreedyPath = TowerOfHanoiGreedyAlgorithm(Towers);
+console.log(GreedyPath);
 function ringListener(ringObj){
     ringObj.addEventListener('dragstart',dragStart)
     ringObj.addEventListener('dragend',dragEnd)
