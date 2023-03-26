@@ -6,13 +6,29 @@ const numRing = document.getElementById('num-ring')
 const workStatus = document.getElementById('work-status')
 const movesNum = document.getElementById('moves-num')
 const solveBtn = document.getElementById('solve-btn')
+const hintBtn = document.getElementById('hint-btn')
 const areas = document.getElementsByClassName('area')
 const incBtn = document.getElementById('inc-btn')
 const decBtn = document.getElementById('dec-btn')
+const userBtn = document.getElementById('User')
+const AIBtn = document.getElementById('AI')
+const Greedy = document.getElementById('Greedy')
+const aStar = document.getElementById('A*')
+const Algorithm = document.getElementById('Algorithm')
+const restartBtn = document.getElementById('restart-btn')
+const speedRange = document.getElementById('speedRange')
+const executeSpeed = document.getElementById('execute-speed')
+const slidecontainer = document.getElementById('slidecontainer')
+const minMov = document.getElementById('min-mov')
 let dragItem = null 
 let startGame = false
-const GreedyPath = TowerOfHanoiGreedyAlgorithm(Towers);
-console.log(GreedyPath);
+let playMode = "User"
+const widthRingUnit = 35
+const ringColor = ['#774f9b','#43afe2','#fae50e','#f96c0d','#e24ba5','#c0504e']
+
+// const GreedyPath = TowerOfHanoiGreedyAlgorithm(Towers); //applay algorithm
+// console.log(GreedyPath);
+
 function ringListener(ringObj){
     ringObj.addEventListener('dragstart',dragStart)
     ringObj.addEventListener('dragend',dragEnd)
@@ -34,6 +50,10 @@ function initListener(){
 incBtn.addEventListener('click',addRing)
 decBtn.addEventListener('click',removeRing)
 solveBtn.addEventListener('click',solve)
+restartBtn.addEventListener('click',reloadePage)
+userBtn.addEventListener('change',getCheckedMode)
+AIBtn.addEventListener('change',getCheckedMode)
+speedRange.addEventListener('input',speedControl)
 //Listener Event
 function dragStart(){
     if(this === tours[0].children[0] || this === tours[1].children[0] ||this === tours[2].children[0])
@@ -114,60 +134,76 @@ function dragLeave(){
 
 // ************
 function initRing(){
-
-    rings[0].style.width ="35px"
-    rings[1].style.width ="70px"
-    rings[2].style.width ="105px"
+    
+    for(let i=0 ; i< 3 ; i++)
+    {
+        rings[i].style.width = String(widthRingUnit*(i+1))+"px"
+        rings[i].style.backgroundColor = ringColor[i]
+    }
+    
+    // rings[1].style.width = String(widthRingUnit*2)+"px"
+    // rings[1].style.backgroundColor = ringColor[1]
+    // rings[2].style.width = String(widthRingUnit*3)+"px"
+    // rings[2].style.backgroundColor = ringColor[2]
 }
 function addRing()
 {
-    if (numRing.innerText < 6 )
+    if (!startGame)
     {
-        if(!startGame){
-        numRing.innerText++;
-        workStatus.innerHTML='add new Ring'
-        let tmp = rings[2].cloneNode(true)
-        ringListener(tmp);
-        if(numRing.innerText == 4 )
-        {
-            tmp.style.width="140px"
-        }
-        else if(numRing.innerText == 5 )
-        {
-            tmp.style.width="175px"
-        }
-        else if(numRing.innerText == 6 )
-        {
-            tmp.style.width="210px"
-        }
-        
-        tours[0].append(tmp)
+        if(numRing.innerText < 6){
+            Towers[0].unshift(Number(numRing.innerText)+1)
+            console.log(Towers);
+            numRing.innerText++;
+            workStatus.innerHTML='add new Ring'
+            let tmp = rings[2].cloneNode(true)
+            ringListener(tmp);
+            tmp.style.width = String(35*(Number(numRing.innerText)))+"px"
+            tmp.style.backgroundColor = ringColor[Number(numRing.innerText)-1]
+            minMov.innerHTML = `minimum number of movement: ${(2**Number(numRing.innerText))-1}`
+            // console.log(minMov);
+            // if(numRing.innerText == 4 )
+            // {
+            //     tmp.style.width="140px"
+            // }
+            // else if(numRing.innerText == 5 )
+            // {
+            //     tmp.style.width="175px"
+            // }
+            // else if(numRing.innerText == 6 )
+            // {
+            //     tmp.style.width="210px"
+            // }
+            
+            tours[0].append(tmp)
         }
         else{
-            workStatus.innerHTML="Game already started we can't add new ring"
+            workStatus.innerHTML='maximum num of Ring 6'
         }
         
     }
     else{
-        workStatus.innerHTML='maximum num of Ring 6'
+        workStatus.innerHTML="Game already started we can't add new ring"
     }
     
 }
 
 function removeRing(){
-    if (numRing.innerText >= 4 )
+    if (!startGame)
     {
-        if(!startGame){
-        numRing.innerText--;
-        workStatus.innerHTML='remove Ring'
-        let lastElementFirstTour = tours[0].children[tours[0].children.length-1]
-        lastElementFirstTour.remove()
+        if(numRing.innerText >= 4){
+            Towers[0].shift()
+            console.log(Towers);
+            numRing.innerText--;
+            workStatus.innerHTML='remove Ring'
+            let lastElementFirstTour = tours[0].children[tours[0].children.length-1]
+            minMov.innerHTML = `minimum number of movement: ${(2**Number(numRing.innerText))-1}`
+            lastElementFirstTour.remove()
         }else{
-            workStatus.innerHTML="Game already started we can't remove ring"
+            workStatus.innerHTML='minimum num of Ring 3'
         }
     }
     else{
-        workStatus.innerHTML='minimum num of Ring 3'
+        workStatus.innerHTML="Game already started we can't remove ring"
     }
 }
 
@@ -179,7 +215,7 @@ function moveRing(tourStart,tourEnd){
         node.style.display ='none'
         areas[tourStart].append(node)
         node.style.display ='block'
-    },500)
+    },((2.3-executeSpeed.innerHTML)*500))
     // setTimeout(()=>node.style.display ='block',500);
     
     // setTimeout(()=>this.style.display ='block',0);
@@ -187,17 +223,17 @@ function moveRing(tourStart,tourEnd){
         node.style.display ='none'
         areas[tourEnd].append(node)
         node.style.display ='block'
-    },1000)
+    },((2.3-executeSpeed.innerHTML)*500*2))
 
     setTimeout(()=>{
         node.style.display ='none'
         tours[tourEnd].prepend(node)
         node.style.display ='block'
-    },1500)
+    },((2.3-executeSpeed.innerHTML)*500*3))
 }
 
 function solve(){
-    
+    startGame = true
     let sol = TowerOfHanoiGreedyAlgorithm(Towers)
     console.log("Solution", sol);
     let from
@@ -206,13 +242,14 @@ function solve(){
     for(let i =0 ;i<sol.length ;i++){
         console.log(sol[i]);
     }
-    // 
+    //
     for(let i =0 ;i<sol.length - 1 ;i++){
         // console.log("+++++++++++++++++++++++++++++");
         // console.log(sol[i][0].length,"+",sol[i][1].length,"+",sol[i][2].length)
         // console.log(sol[i+1][0].length,"+",sol[i+1][1].length,"+",sol[i+1][2].length)
         // console.log(sol[i][0].length - sol[i+1][0].length,"+",sol[i][1].length - sol[i+1][1].length,"+",sol[i][2].length - sol[i+1][2].length)
         // // 1 from ==== -1 to
+        
         setTimeout(()=>{
         for (let j=0 ; j< 3 ; j++){
             if( sol[i][j].length - sol[i+1][j].length === 1 ){
@@ -223,19 +260,52 @@ function solve(){
                 to = j 
             }
         }
-        // console.log("+++++++++++++++++++++++++++++");
+    //     // console.log("+++++++++++++++++++++++++++++");
 
-        // break
+    //     // break
         console.log(from,"-->",to)
         moveRing(from,to)
-    },1500*i)
+        workStatus.innerHTML = `Move Disk: ${from} ==> ${to}`
+        movesNum.innerHTML = Number(movesNum.innerHTML)+1
+    },(1700*i))//2.5-executeSpeed.innerHTML
         
         // setTimeout(()=>{moveRing(from,to)},1500*i)
         
+    } 
+}
+function getCheckedMode(){
+    if (userBtn.checked) 
+    {
+        playMode = userBtn.value
+        solveBtn.style.display ='none'
+        hintBtn.style.display ='block'
+        slidecontainer.style.display ='none'
+        Algorithm.style.display ='none'
+        
     }
+    else if (AIBtn.checked)
+    {
+        playMode = AIBtn.value
+        slidecontainer.style.display ='flex'
+        solveBtn.style.display ='block'
+        hintBtn.style.display ='none'
+        Algorithm.style.display ='flex'
+        
+    }
+    console.log(playMode)
+}
+function reloadePage ()
+{
+    location.reload()
+}
+function speedControl() 
+{
+    let val = this.value/100
+    executeSpeed.innerHTML = val.toFixed(2)
     
-    
+    // console.log((executeSpeed.innerHTML)*1500,((executeSpeed.innerHTML)*1500)/3)
 }
 // ****************************************************** main Execute ****************************************//
 initListener()
 initRing()
+getCheckedMode()

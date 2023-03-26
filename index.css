@@ -12,6 +12,7 @@ body{
     justify-content: center;
     align-items: center;
     column-gap: 5px;
+    width: 100%;
 }
 
 .header p:nth-child(1){
@@ -32,6 +33,23 @@ body{
 
 .mov-num{
     font-size: 20px;
+}
+.mode-choice{
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+#solve-btn{
+    margin-right: 30px;
+}
+#hint-btn{
+    margin-right: 30px;
+}
+#dec-btn{
+    margin-right: 30px;
+}
+#moves-num{
+    margin-right: 30px;
 }
 /* ******************************************************* */
 .paly-body{
@@ -60,11 +78,12 @@ body{
 }
 
 .ring{
-    width: 200px;
+    /* width: 200px; */
     height: 30px;
-    background-color: purple;
+    /* background-color: purple; */
     border-radius: 20px;
-    margin-top: 2px;
+    border: solid black 1px;
+    /* margin-top: 2px; */
     
 }
 .ring-container{
@@ -95,4 +114,57 @@ body{
     width: 350px;
     border: green solid 1px;
     justify-content: center;
+}
+
+/* Slider */
+
+.slidecontainer {
+    width: 12%; /* Width of the outside container */
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  /* The slider itself */
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;  
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; 
+    background: #04AA6D;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #04AA6D;
+    cursor: pointer;
+  }
+/* End Slider */
+
+.allContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.min-mov{
+    margin-top: 40px;
+    font-size: 30px;
 }
