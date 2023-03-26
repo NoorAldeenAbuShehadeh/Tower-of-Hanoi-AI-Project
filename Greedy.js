@@ -101,13 +101,16 @@ const TowerOfHanoiGreedyAlgorithm = (Towers) => {
       if (i === tree.length - 1) {
         path.unshift(tree[i][0]);
         x = tree[i][1];
-      } else if (areSame(Towers, tree[i][1]) || i === 0) {
+      } else if (i === 0) {
         path.unshift(tree[i][0]);
         path.unshift(tree[i][1]);
-        break;
       } else if (areSame(x, tree[i][0])) {
         path.unshift(tree[i][0]);
         x = tree[i][1];
+        if(areSame(Towers, tree[i][1])){//resolve problem
+          path.unshift(tree[i][1]);
+          break;
+        }
       }
     }
     return path;
@@ -115,9 +118,12 @@ const TowerOfHanoiGreedyAlgorithm = (Towers) => {
 
   let tree = GreedyAlgorithm(Towers);
   let path = finalPath(tree);
-  // console.log(path.length-1);
-  // console.log(path);
+  console.log(path.length-1);
+  console.log(path);
 
   return path;
 };
+
+// let Towers=[[6,5,4,3,2,1],[],[]]
+// TowerOfHanoiGreedyAlgorithm(Towers);
 export default TowerOfHanoiGreedyAlgorithm;
