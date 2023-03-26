@@ -1,6 +1,6 @@
 
 
-const TowerOfHanoiGreedyAlgorithm = (Towers) => {
+export const TowerOfHanoiGreedyAlgorithm = (Towers) => {
   const GreedyAlgorithm = (Towers) => {
     let closeList = [];
     let openList = [Towers];
@@ -120,4 +120,4 @@ const TowerOfHanoiGreedyAlgorithm = (Towers) => {
 
   return path;
 };
-export default TowerOfHanoiGreedyAlgorithm;
+// export default TowerOfHanoiGreedyAlgorithm;

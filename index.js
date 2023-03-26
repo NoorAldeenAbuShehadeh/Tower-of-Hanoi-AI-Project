@@ -1,5 +1,5 @@
-import TowerOfHanoiGreedyAlgorithm from './Greedy.js'
-const Towers = [[6, 5, 4, 3, 2, 1], [], []];
+import {TowerOfHanoiGreedyAlgorithm} from './Greedy.js'
+const Towers = [[3,2,1], [], []];
 const rings = document.getElementsByClassName('ring')
 const tours = document.getElementsByClassName('ring-container')
 const numRing = document.getElementById('num-ring')
@@ -7,6 +7,8 @@ const workStatus = document.getElementById('work-status')
 const movesNum = document.getElementById('moves-num')
 const solveBtn = document.getElementById('solve-btn')
 const areas = document.getElementsByClassName('area')
+const incBtn = document.getElementById('inc-btn')
+const decBtn = document.getElementById('dec-btn')
 let dragItem = null 
 let startGame = false
 const GreedyPath = TowerOfHanoiGreedyAlgorithm(Towers);
@@ -29,7 +31,9 @@ function initListener(){
         tourListener(j)
     }
 }
-
+incBtn.addEventListener('click',addRing)
+decBtn.addEventListener('click',removeRing)
+solveBtn.addEventListener('click',solve)
 //Listener Event
 function dragStart(){
     if(this === tours[0].children[0] || this === tours[1].children[0] ||this === tours[2].children[0])
@@ -190,6 +194,47 @@ function moveRing(tourStart,tourEnd){
         tours[tourEnd].prepend(node)
         node.style.display ='block'
     },1500)
+}
+
+function solve(){
+    
+    let sol = TowerOfHanoiGreedyAlgorithm(Towers)
+    console.log("Solution", sol);
+    let from
+    let to
+    // 
+    for(let i =0 ;i<sol.length ;i++){
+        console.log(sol[i]);
+    }
+    // 
+    for(let i =0 ;i<sol.length - 1 ;i++){
+        // console.log("+++++++++++++++++++++++++++++");
+        // console.log(sol[i][0].length,"+",sol[i][1].length,"+",sol[i][2].length)
+        // console.log(sol[i+1][0].length,"+",sol[i+1][1].length,"+",sol[i+1][2].length)
+        // console.log(sol[i][0].length - sol[i+1][0].length,"+",sol[i][1].length - sol[i+1][1].length,"+",sol[i][2].length - sol[i+1][2].length)
+        // // 1 from ==== -1 to
+        setTimeout(()=>{
+        for (let j=0 ; j< 3 ; j++){
+            if( sol[i][j].length - sol[i+1][j].length === 1 ){
+                from = j
+            }
+            else if(sol[i][j].length - sol[i+1][j].length === -1)
+            {
+                to = j 
+            }
+        }
+        // console.log("+++++++++++++++++++++++++++++");
+
+        // break
+        console.log(from,"-->",to)
+        moveRing(from,to)
+    },1500*i)
+        
+        // setTimeout(()=>{moveRing(from,to)},1500*i)
+        
+    }
+    
+    
 }
 // ****************************************************** main Execute ****************************************//
 initListener()
