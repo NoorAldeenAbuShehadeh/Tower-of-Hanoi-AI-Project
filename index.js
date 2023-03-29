@@ -206,33 +206,43 @@ function removeRing(){
         workStatus.innerHTML="Game already started we can't remove ring"
     }
 }
-
-function moveRing(tourStart,tourEnd){
+function delay(ms)
+{
+    return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            resolve('success')
+        }, ms);
+    })
+}
+async function moveRing(tourStart,tourEnd){
     let node = tours[tourStart].children[0]
     // setTimeout(()=>node.style.display ='none',0);
     
-    setTimeout(()=>{
+    // setTimeout(()=>{
         node.style.display ='none'
         areas[tourStart].append(node)
         node.style.display ='block'
-    },((2.3-executeSpeed.innerHTML)*500))
+        await delay(500/executeSpeed.innerHTML)
+    // },((2.3-executeSpeed.innerHTML)*500))
     // setTimeout(()=>node.style.display ='block',500);
     
     // setTimeout(()=>this.style.display ='block',0);
-    setTimeout(()=>{
+    // setTimeout(()=>{
         node.style.display ='none'
         areas[tourEnd].append(node)
         node.style.display ='block'
-    },((2.3-executeSpeed.innerHTML)*500*2))
+        await delay(500/executeSpeed.innerHTML)
+    // },((2.3-executeSpeed.innerHTML)*500*2))
 
-    setTimeout(()=>{
+    // setTimeout(()=>{
         node.style.display ='none'
         tours[tourEnd].prepend(node)
         node.style.display ='block'
-    },((2.3-executeSpeed.innerHTML)*500*3))
+        await delay(500/executeSpeed.innerHTML)
+    // },((2.3-executeSpeed.innerHTML)*500*3))
 }
 
-function solve(){
+async function solve(){
     startGame = true
     let sol = TowerOfHanoiGreedyAlgorithm(Towers)
     console.log("Solution", sol);
@@ -250,7 +260,7 @@ function solve(){
         // console.log(sol[i][0].length - sol[i+1][0].length,"+",sol[i][1].length - sol[i+1][1].length,"+",sol[i][2].length - sol[i+1][2].length)
         // // 1 from ==== -1 to
         
-        setTimeout(()=>{
+        // setTimeout(()=>{
         for (let j=0 ; j< 3 ; j++){
             if( sol[i][j].length - sol[i+1][j].length === 1 ){
                 from = j
@@ -264,10 +274,10 @@ function solve(){
 
     //     // break
         console.log(from,"-->",to)
-        moveRing(from,to)
+        await moveRing(from,to)
         workStatus.innerHTML = `Move Disk: ${from} ==> ${to}`
         movesNum.innerHTML = Number(movesNum.innerHTML)+1
-    },(1700*i))//2.5-executeSpeed.innerHTML
+    // },(1700*i))//2.5-executeSpeed.innerHTML
         
         // setTimeout(()=>{moveRing(from,to)},1500*i)
         
