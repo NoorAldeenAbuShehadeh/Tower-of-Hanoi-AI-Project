@@ -296,7 +296,7 @@ async function hint(){
         await moveRing(from,to)
         
         movesNum.innerHTML = Number(movesNum.innerHTML)+1
-        // break
+        break
     }
     // 
 
