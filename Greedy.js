@@ -1,13 +1,15 @@
 
 
-export const TowerOfHanoiGreedyAlgorithm = (Towers) => {
+export const TowerOfHanoiGreedyAlgorithm = (Towers,goal) => {
   const GreedyAlgorithm = (Towers) => {
     let closeList = [];
     let openList = [Towers];
     let parent_Child = [];
-    const goal = [[], [], Towers[0]];
+    // const goal = [[], [], Towers[0]];
     if (openList.length == 0) return null;
 
+    console.log("Towers",Towers);
+    console.log("goal",goal);
     while (openList.length > 0) {
       let n = best_Huristic(openList, Towers[0].length); //Towers[0].length : number of rings (3-6)
       if (areSame(n, goal)) {
@@ -97,6 +99,7 @@ export const TowerOfHanoiGreedyAlgorithm = (Towers) => {
   const finalPath = (tree) => {
     let path = [];
     let x = [];
+    
     for (let i = tree.length - 1; i >= 0; i--) {
       if (i === tree.length - 1) {
         path.unshift(tree[i][0]);

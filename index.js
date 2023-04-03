@@ -46,10 +46,14 @@ function initListener(){
     for (let j of tours){
         tourListener(j)
     }
+    for(let i=0; i< rings.length;i++){
+        rings[i].setAttribute("draggable", true);
+    }
 }
 incBtn.addEventListener('click',addRing)
 decBtn.addEventListener('click',removeRing)
 solveBtn.addEventListener('click',solve)
+hintBtn.addEventListener('click',hint)
 restartBtn.addEventListener('click',reloadePage)
 userBtn.addEventListener('change',getCheckedMode)
 AIBtn.addEventListener('change',getCheckedMode)
@@ -90,6 +94,13 @@ function checkEndGame(){
         }
         if(getGoal && tours[2].children.length === Number(numRing.innerText)) workStatus.innerHTML="Congratulation we get a Goal"
 }
+function disableBtn(){
+    AIBtn.disabled = true;
+    userBtn.disabled = true;
+    Greedy.disabled = true;
+    aStar.disabled = true;
+
+}
 function Drop(){
     let correctMove = true;
     if(dragItem == null)
@@ -111,6 +122,7 @@ function Drop(){
     if(correctMove){
     this.prepend(dragItem) ;
     startGame = true;
+    disableBtn()
     movesNum.innerText = Number(movesNum.innerText)+1
     workStatus.innerHTML='Move one Ring'
     }
@@ -241,10 +253,61 @@ async function moveRing(tourStart,tourEnd){
         await delay(500/executeSpeed.innerHTML)
     // },((2.3-executeSpeed.innerHTML)*500*3))
 }
+async function hint(){
+    let hintArr =[[],[],[]]
+    for(let i=0 ; i<tours[0].children.length;i++)
+    {
+        let widthsize = tours[0].children[i].style.width
+        widthsize = (Number(widthsize.slice(0, -2))/widthRingUnit); 
+        // console.log("0",widthsize);
+        hintArr[0].unshift(widthsize)
+    }
+    for(let i=0 ; i<tours[1].children.length;i++)
+    {
+        let widthsize = tours[1].children[i].style.width
+        widthsize = (Number(widthsize.slice(0, -2))/widthRingUnit); 
+        // console.log("1",widthsize);
+        hintArr[1].unshift(widthsize)
+    }
+    for(let i=0 ; i<tours[2].children.length;i++)
+    {
+        let widthsize = tours[2].children[i].style.width
+        widthsize = (Number(widthsize.slice(0, -2))/widthRingUnit); 
+        // console.log("2",widthsize);
+        hintArr[2].unshift(widthsize)
+    }
+    console.log(hintArr);
+    let sol = TowerOfHanoiGreedyAlgorithm(hintArr,[[],[],[...Towers[0]]])
+    let from
+    let to
+    // 
+    for(let i =0 ;i<sol.length - 1 ;i++){
+        for (let j=0 ; j< 3 ; j++){
+            if( sol[i][j].length - sol[i+1][j].length === 1 ){
+                from = j
+            }
+            else if(sol[i][j].length - sol[i+1][j].length === -1)
+            {
+                to = j 
+            }
+        }
+        console.log(from,"-->",to)
+        workStatus.innerHTML = `Move Disk: ${from} ==> ${to}`
+        await moveRing(from,to)
+        
+        movesNum.innerHTML = Number(movesNum.innerHTML)+1
+        // break
+    }
+    // 
 
+}
 async function solve(){
+    console.log("startGame",startGame);
+    if(!startGame)
+    {
     startGame = true
-    let sol = TowerOfHanoiGreedyAlgorithm(Towers)
+    disableBtn()
+    let sol = TowerOfHanoiGreedyAlgorithm(Towers,[[],[],[...Towers[0]]])
     console.log("Solution", sol);
     let from
     let to
@@ -274,14 +337,21 @@ async function solve(){
 
     //     // break
         console.log(from,"-->",to)
-        await moveRing(from,to)
         workStatus.innerHTML = `Move Disk: ${from} ==> ${to}`
+        await moveRing(from,to)
+        
         movesNum.innerHTML = Number(movesNum.innerHTML)+1
     // },(1700*i))//2.5-executeSpeed.innerHTML
         
         // setTimeout(()=>{moveRing(from,to)},1500*i)
         
-    } 
+    }
+    }
+    else{
+        workStatus.innerHTML="Game already started"
+    }
+    console.log("startGame",startGame);
+    workStatus.innerHTML ="Game finish successfully" 
 }
 function getCheckedMode(){
     if (userBtn.checked) 
@@ -291,6 +361,7 @@ function getCheckedMode(){
         hintBtn.style.display ='block'
         slidecontainer.style.display ='none'
         Algorithm.style.display ='none'
+        initListener()
         
     }
     else if (AIBtn.checked)
@@ -300,6 +371,7 @@ function getCheckedMode(){
         solveBtn.style.display ='block'
         hintBtn.style.display ='none'
         Algorithm.style.display ='flex'
+        removeListener()
         
     }
     console.log(playMode)
@@ -315,7 +387,30 @@ function speedControl()
     
     // console.log((executeSpeed.innerHTML)*1500,((executeSpeed.innerHTML)*1500)/3)
 }
+function removeRingListener(ringObj){
+    ringObj.removeEventListener('dragstart',dragStart)
+    ringObj.removeEventListener('dragend',dragEnd)
+}
+function removeTourListener(tourObj){
+    tourObj.removeEventListener('dragover',dragOver) ;
+    tourObj.removeEventListener('dragenter',dragEnter);
+    tourObj.removeEventListener('dragleave',dragLeave);
+    tourObj.removeEventListener('drop',Drop);
+}
+function removeListener(){
+    for(let i of rings){
+        removeRingListener(i)
+    }
+    for (let j of tours){
+        removeTourListener(j)
+    }
+    for(let i=0; i< rings.length;i++){
+        rings[i].setAttribute("draggable", false);
+    }
+}
 // ****************************************************** main Execute ****************************************//
 initListener()
 initRing()
 getCheckedMode()
+// removeListener()
+  
