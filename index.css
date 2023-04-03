@@ -4,33 +4,79 @@ body{
     flex-direction: column; 
      align-items: center; */
 }
-
+.title-Page{
+    font-family: 'Indie Flower', cursive;
+    font-size: 60px; 
+    font-weight: 600;
+    margin-bottom: 10px;
+}
 .header{
     display: flex;
     /* background-color: aqua; */
-    border: solid 1px red;
+    /* border: dashed 2px red; */
     justify-content: center;
     align-items: center;
     column-gap: 5px;
-    width: 100%;
+    /* width: 100%; */
 }
-
-.header p:nth-child(1){
+/*  */
+.fontStyleHeader{
+    font-family: 'Alkatra', cursive;
     font-size: 20px;
 }
+.header p:nth-child(1){
+    font-family: 'Alkatra', cursive;
+    font-size: 20px;
+}
+label{
+    font-family: 'Alkatra', cursive;
+    font-size: 20px;
+    padding-left: 5px;
+    /* padding-right: 5px; */
+}
+.radio-btn-choose{
+    accent-color: #1d2b3b;
+}
+/*  */
 .header div:nth-child(2){
     padding: 5px 10px;
     font-size: 20px;
     background-color: #d8e9ff;
-    border-radius: 5px; 
+    border-radius: 5px;
+}
+#hint-btn{
+    margin-right: 30px;
 }
 .btn{
+    display: flex;
     padding: 5px 10px;
     font-size: 20px;
-    background-color: #d8e9ff;
-    border-radius: 5px;   
+    border-radius: 5px;
+    border: solid 2px black;
+    cursor: pointer;
+    width: 60px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
 }
-
+.btn:hover{
+    background-color: #1d2b3b;
+    color: #ffff;
+    transition: 400ms;
+}
+.btn-i{
+    padding: 5px 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: solid 2px black;
+    cursor: pointer;
+    height: 20px;
+}
+.btn-i:hover{
+    background-color: #1d2b3b;
+    color: #ffff;
+    transition: 400ms;
+}
 .mov-num{
     font-size: 20px;
 }
@@ -42,9 +88,7 @@ body{
 #solve-btn{
     margin-right: 30px;
 }
-#hint-btn{
-    margin-right: 30px;
-}
+
 #dec-btn{
     margin-right: 30px;
 }
@@ -54,12 +98,12 @@ body{
 /* ******************************************************* */
 .paly-body{
     display: flex;
-    column-gap: 20px;
+    column-gap: 50px;
     padding-top: 20px;
     justify-content: center;
 }
 .tour{
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,16 +133,19 @@ body{
 .ring-container{
     position: absolute;
     bottom: 5px;
-    border: 1px solid aqua;
+    /* border: 1px solid aqua; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 250px;
-    height: 100%;
+    width: 350px;
+    height: 300px;
     justify-content: flex-end;
 }
 /* *****************  */
 .work-status{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-family: 'Alkatra', cursive;
     font-size: 30px;
 }
 
@@ -106,13 +153,13 @@ body{
 .transitionArea{
     display: flex;
     justify-content: center;
-    column-gap: 20px;
+    column-gap: 50px;
 }
 .area{
     height: 35px;
     display: flex;
     width: 350px;
-    border: green solid 1px;
+    /* border: green solid 1px; */
     justify-content: center;
 }
 
@@ -133,7 +180,7 @@ body{
     border-radius: 5px;  
     background: #d3d3d3;
     outline: none;
-    opacity: 0.7;
+    /* opacity: 0.7; */
     -webkit-transition: .2s;
     transition: opacity .2s;
   }
@@ -144,7 +191,7 @@ body{
     width: 20px;
     height: 20px;
     border-radius: 50%; 
-    background: #04AA6D;
+    background: black;
     cursor: pointer;
   }
   
@@ -152,7 +199,7 @@ body{
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #04AA6D;
+    background: black;
     cursor: pointer;
   }
 /* End Slider */
@@ -167,4 +214,6 @@ body{
 .min-mov{
     margin-top: 40px;
     font-size: 30px;
+    font-family: 'Alkatra', cursive;
+
 }

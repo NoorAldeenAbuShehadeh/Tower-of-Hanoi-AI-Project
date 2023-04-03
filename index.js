@@ -66,7 +66,7 @@ function dragStart(){
         dragItem = this;
         setTimeout(()=>this.style.display ='none',0);
     }
-    
+    console.log(99999);
 }
 function dragEnd(){
     
@@ -102,6 +102,7 @@ function disableBtn(){
 
 }
 function Drop(){
+    this.style.border = 'none'
     let correctMove = true;
     if(dragItem == null)
     {
@@ -137,7 +138,7 @@ function dragOver(e){
 }
 function dragEnter(e){
     e.preventDefault();
-    this.style.border = '2px dotted red'
+    this.style.border = '2px dashed red'
 }
 function dragLeave(){
     this.style.border = 'none'
@@ -358,7 +359,7 @@ function getCheckedMode(){
     {
         playMode = userBtn.value
         solveBtn.style.display ='none'
-        hintBtn.style.display ='block'
+        hintBtn.style.display ='flex'
         slidecontainer.style.display ='none'
         Algorithm.style.display ='none'
         initListener()
@@ -368,7 +369,7 @@ function getCheckedMode(){
     {
         playMode = AIBtn.value
         slidecontainer.style.display ='flex'
-        solveBtn.style.display ='block'
+        solveBtn.style.display ='flex'
         hintBtn.style.display ='none'
         Algorithm.style.display ='flex'
         removeListener()
