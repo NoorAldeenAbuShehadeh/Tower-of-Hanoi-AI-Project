@@ -6,43 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tower of Hanoi</title>
     <link rel="stylesheet" href="./index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alkatra&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div class="allContainer">
+    <div class="title-Page">
+        Tower of Hanoi
+    </div>
     <div class="header">
         <div class="mode-choice">
             <p>Mode: </p>
-            <input type="radio" id="User" name="mode" value="User" checked>
+            <input type="radio" id="User" name="mode" value="User" class="radio-btn-choose" checked>
             <label for="User">User</label>
-            <input type="radio" id="AI" name="mode" value="AI">
+            <input type="radio" id="AI" name="mode" value="AI" class="radio-btn-choose">
             <label for="AI">AI</label>
         </div>
-        <p>Disk: </p>
-        <div id="num-ring">3</div>
-        <div class="btn" id="inc-btn"><i class="fas fa-arrow-up"></i></div>
-        <div class="btn" id="dec-btn"><i class="fas fa-arrow-down"></i></div>
-        <p class="mov-num">Move: </p>
-        <p class="mov-num" id="moves-num" > 0 </p>
+        <p class="fontStyleHeader">Disk: </p>
+        <div id="num-ring" class="fontStyleHeader">3</div>
+        <div class="btn-i" id="inc-btn"><i class="fas fa-arrow-up fontStyleHeader"></i></div>
+        <div class="btn-i" id="dec-btn"><i class="fas fa-arrow-down fontStyleHeader"></i></div>
         
-        <p class="btn" id="hint-btn">Hint</p>
+        
+        
         <div class="mode-choice" id="Algorithm">
             <p>Algorithm: </p>
-            <input type="radio" id="Greedy" name="Algorithm" value="Greedy" checked>
+            <input type="radio" id="Greedy" name="Algorithm" value="Greedy" class="radio-btn-choose" checked>
             <label for="Greedy">Greedy</label>
-            <input type="radio" id="A*" name="Algorithm" value="A*">
+            <input type="radio" id="A*" name="Algorithm" value="A*" class="radio-btn-choose">
             <label for="A*">A*</label>
         </div>
+        <p class="mov-num fontStyleHeader">Move: </p>
+        <p class="mov-num fontStyleHeader" id="moves-num" > 0 </p>
+        <p class="btn fontStyleHeader" id="hint-btn">Hint</p>
         <div class="slidecontainer" id="slidecontainer">
             <input step="1" type="range" min="100" max="200" value="100" class="slider" id="speedRange">
-            <p>x</p>
-            <p id="execute-speed">1.00</p>
+            <p class="fontStyleHeader">x</p>
+            <p id="execute-speed" class="fontStyleHeader">1.00</p>
         </div>
-        <p class="btn" id="solve-btn">Solve</p>
-        <p class="btn" id="restart-btn">Restart</p>
+        <p class="btn fontStyleHeader" id="solve-btn">Solve</p>
+        <p class="btn fontStyleHeader" id="restart-btn">Restart</p>
         
         
     </div>
-    <div class="work-status" id="work-status">Let's Start Play</div>
+    <div class="stBox">
+        <div class="work-status" id="work-status">Let's Start Play </div>
+        <p class="btn fontStyleHeader" id="tryAgain">try again</p>
+    </div>
     <div class="transitionArea">
         <div class="area"></div>
         <div class="area"></div>
@@ -89,7 +100,7 @@
             </div>
         </div>
     </div>
-    <div class="min-mov" id="min-mov">minimum number of movement: 7</div>
+    <div class="min-mov" id="min-mov">Minimum Number of Movement: 7</div>
     </div>
     <script type="module" src="./index.js"></script>
     <script src="https://kit.fontawesome.com/eb1433d618.js" crossorigin="anonymous"></script>

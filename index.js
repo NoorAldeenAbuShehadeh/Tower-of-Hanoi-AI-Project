@@ -20,6 +20,7 @@ const speedRange = document.getElementById('speedRange')
 const executeSpeed = document.getElementById('execute-speed')
 const slidecontainer = document.getElementById('slidecontainer')
 const minMov = document.getElementById('min-mov')
+const tryAgain = document.getElementById('tryAgain')
 let dragItem = null 
 let startGame = false
 let playMode = "User"
@@ -57,6 +58,7 @@ hintBtn.addEventListener('click',hint)
 restartBtn.addEventListener('click',reloadePage)
 userBtn.addEventListener('change',getCheckedMode)
 AIBtn.addEventListener('change',getCheckedMode)
+tryAgain.addEventListener('click',reloadePage)
 speedRange.addEventListener('input',speedControl)
 //Listener Event
 function dragStart(){
@@ -66,7 +68,7 @@ function dragStart(){
         dragItem = this;
         setTimeout(()=>this.style.display ='none',0);
     }
-    
+    console.log(99999);
 }
 function dragEnd(){
     
@@ -92,7 +94,10 @@ function checkEndGame(){
                 break;
             }
         }
-        if(getGoal && tours[2].children.length === Number(numRing.innerText)) workStatus.innerHTML="Congratulation we get a Goal"
+        if(getGoal && tours[2].children.length === Number(numRing.innerText)){
+            workStatus.innerHTML="Congratulation we get the Goal 🎉"
+            tryAgain.style.display='flex'
+        }
 }
 function disableBtn(){
     AIBtn.disabled = true;
@@ -102,6 +107,7 @@ function disableBtn(){
 
 }
 function Drop(){
+    this.style.border = 'none'
     let correctMove = true;
     if(dragItem == null)
     {
@@ -124,7 +130,7 @@ function Drop(){
     startGame = true;
     disableBtn()
     movesNum.innerText = Number(movesNum.innerText)+1
-    workStatus.innerHTML='Move one Ring'
+    workStatus.innerHTML='Move one Disk'
     }
     else{
         console.log('filed move not in the top');
@@ -137,7 +143,7 @@ function dragOver(e){
 }
 function dragEnter(e){
     e.preventDefault();
-    this.style.border = '2px dotted red'
+    this.style.border = '2px dashed red'
 }
 function dragLeave(){
     this.style.border = 'none'
@@ -337,7 +343,7 @@ async function solve(){
 
     //     // break
         console.log(from,"-->",to)
-        workStatus.innerHTML = `Move Disk: ${from} ==> ${to}`
+        workStatus.innerHTML = `Move Disk from Tower ${from} to Tower ${to}`
         await moveRing(from,to)
         
         movesNum.innerHTML = Number(movesNum.innerHTML)+1
@@ -346,19 +352,21 @@ async function solve(){
         // setTimeout(()=>{moveRing(from,to)},1500*i)
         
     }
+    workStatus.innerHTML ="Game finish successfully 🎉"
+    tryAgain.style.display='flex'
     }
     else{
         workStatus.innerHTML="Game already started"
     }
     console.log("startGame",startGame);
-    workStatus.innerHTML ="Game finish successfully" 
+    
 }
 function getCheckedMode(){
     if (userBtn.checked) 
     {
         playMode = userBtn.value
         solveBtn.style.display ='none'
-        hintBtn.style.display ='block'
+        hintBtn.style.display ='flex'
         slidecontainer.style.display ='none'
         Algorithm.style.display ='none'
         initListener()
@@ -368,7 +376,7 @@ function getCheckedMode(){
     {
         playMode = AIBtn.value
         slidecontainer.style.display ='flex'
-        solveBtn.style.display ='block'
+        solveBtn.style.display ='flex'
         hintBtn.style.display ='none'
         Algorithm.style.display ='flex'
         removeListener()
