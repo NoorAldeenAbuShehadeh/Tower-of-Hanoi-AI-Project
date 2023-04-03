@@ -142,13 +142,26 @@ label{
     justify-content: flex-end;
 }
 /* *****************  */
+.stBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap:30px;
+}
+.stBox p{
+    width: 80px;
+    height: 30px;
+    display: none;
+}
 .work-status{
     margin-top: 30px;
     margin-bottom: 20px;
     font-family: 'Alkatra', cursive;
     font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
 /* ******** */
 .transitionArea{
     display: flex;
