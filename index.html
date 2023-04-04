@@ -15,21 +15,23 @@
     <div class="title-Page">
         Tower of Hanoi
     </div>
-    <div class="header">
-        <div class="mode-choice">
-            <p>Mode: </p>
-            <input type="radio" id="User" name="mode" value="User" class="radio-btn-choose" checked>
-            <label for="User">User</label>
-            <input type="radio" id="AI" name="mode" value="AI" class="radio-btn-choose">
-            <label for="AI">AI</label>
+    <div class="header" id="header">
+        <div class="header-basic">
+            <div class="mode-choice">
+                <p>Mode: </p>
+                <input type="radio" id="User" name="mode" value="User" class="radio-btn-choose" checked>
+                <label for="User">User</label>
+                <input type="radio" id="AI" name="mode" value="AI" class="radio-btn-choose">
+                <label for="AI">AI</label>
+            </div>
+            <p class="fontStyleHeader">Disk: </p>
+            <div id="num-ring" class="fontStyleHeader">3</div>
+            <div class="btn-i" id="inc-btn"><i class="fas fa-arrow-up fontStyleHeader"></i></div>
+            <div class="btn-i" id="dec-btn"><i class="fas fa-arrow-down fontStyleHeader"></i></div>
+            <p class="mov-num fontStyleHeader">Move: </p>
+            <p class="mov-num fontStyleHeader" id="moves-num" > 0 </p>
         </div>
-        <p class="fontStyleHeader">Disk: </p>
-        <div id="num-ring" class="fontStyleHeader">3</div>
-        <div class="btn-i" id="inc-btn"><i class="fas fa-arrow-up fontStyleHeader"></i></div>
-        <div class="btn-i" id="dec-btn"><i class="fas fa-arrow-down fontStyleHeader"></i></div>
-        
-        
-        
+        <div class="header-AI-Mode">
         <div class="mode-choice" id="Algorithm">
             <p>Algorithm: </p>
             <input type="radio" id="Greedy" name="Algorithm" value="Greedy" class="radio-btn-choose" checked>
@@ -37,8 +39,7 @@
             <input type="radio" id="A*" name="Algorithm" value="A*" class="radio-btn-choose">
             <label for="A*">A*</label>
         </div>
-        <p class="mov-num fontStyleHeader">Move: </p>
-        <p class="mov-num fontStyleHeader" id="moves-num" > 0 </p>
+        
         <p class="btn fontStyleHeader" id="hint-btn">Hint</p>
         <div class="slidecontainer" id="slidecontainer">
             <input step="1" type="range" min="100" max="200" value="100" class="slider" id="speedRange">
@@ -47,6 +48,10 @@
         </div>
         <p class="btn fontStyleHeader" id="solve-btn">Solve</p>
         <p class="btn fontStyleHeader" id="restart-btn">Restart</p>
+        </div>
+        
+        
+        
         
         
     </div>

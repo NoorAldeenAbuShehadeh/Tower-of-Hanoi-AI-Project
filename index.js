@@ -21,11 +21,14 @@ const executeSpeed = document.getElementById('execute-speed')
 const slidecontainer = document.getElementById('slidecontainer')
 const minMov = document.getElementById('min-mov')
 const tryAgain = document.getElementById('tryAgain')
+const header = document.getElementById('header')
 let dragItem = null 
 let startGame = false
 let playMode = "User"
 const widthRingUnit = 35
 const ringColor = ['#774f9b','#43afe2','#fae50e','#f96c0d','#e24ba5','#c0504e']
+let from
+let to
 
 // const GreedyPath = TowerOfHanoiGreedyAlgorithm(Towers); //applay algorithm
 // console.log(GreedyPath);
@@ -68,7 +71,7 @@ function dragStart(){
         dragItem = this;
         setTimeout(()=>this.style.display ='none',0);
     }
-    console.log(99999);
+    // console.log(this);
 }
 function dragEnd(){
     
@@ -144,9 +147,11 @@ function dragOver(e){
 function dragEnter(e){
     e.preventDefault();
     this.style.border = '2px dashed red'
+    // console.log("enter",this);
 }
 function dragLeave(){
     this.style.border = 'none'
+    // console.log("leave",this);
 }
 //End Listener Event
 
@@ -172,12 +177,12 @@ function addRing()
             Towers[0].unshift(Number(numRing.innerText)+1)
             console.log(Towers);
             numRing.innerText++;
-            workStatus.innerHTML='add new Ring'
+            workStatus.innerHTML='Add New Disk'
             let tmp = rings[2].cloneNode(true)
             ringListener(tmp);
             tmp.style.width = String(35*(Number(numRing.innerText)))+"px"
             tmp.style.backgroundColor = ringColor[Number(numRing.innerText)-1]
-            minMov.innerHTML = `minimum number of movement: ${(2**Number(numRing.innerText))-1}`
+            minMov.innerHTML = `Minimum Number of Movement: ${(2**Number(numRing.innerText))-1}`
             // console.log(minMov);
             // if(numRing.innerText == 4 )
             // {
@@ -195,7 +200,7 @@ function addRing()
             tours[0].append(tmp)
         }
         else{
-            workStatus.innerHTML='maximum num of Ring 6'
+            workStatus.innerHTML='Maximum Number of Disks 6'
         }
         
     }
@@ -212,12 +217,12 @@ function removeRing(){
             Towers[0].shift()
             console.log(Towers);
             numRing.innerText--;
-            workStatus.innerHTML='remove Ring'
+            workStatus.innerHTML='Remove Disk'
             let lastElementFirstTour = tours[0].children[tours[0].children.length-1]
-            minMov.innerHTML = `minimum number of movement: ${(2**Number(numRing.innerText))-1}`
+            minMov.innerHTML = `Minimum Number of Movement: ${(2**Number(numRing.innerText))-1}`
             lastElementFirstTour.remove()
         }else{
-            workStatus.innerHTML='minimum num of Ring 3'
+            workStatus.innerHTML='Minimum Number of Disks 3'
         }
     }
     else{
@@ -284,8 +289,7 @@ async function hint(){
     }
     console.log(hintArr);
     let sol = TowerOfHanoiGreedyAlgorithm(hintArr,[[],[],[...Towers[0]]])
-    let from
-    let to
+    
     // 
     for(let i =0 ;i<sol.length - 1 ;i++){
         for (let j=0 ; j< 3 ; j++){
@@ -298,12 +302,16 @@ async function hint(){
             }
         }
         console.log(from,"-->",to)
-        workStatus.innerHTML = `Move Disk: ${from} ==> ${to}`
+        
+
+        workStatus.innerHTML = `Move Disk from Tower ${from} to Tower ${to}`
+        movesNum.innerHTML = Number(movesNum.innerHTML)+1
         await moveRing(from,to)
         
-        movesNum.innerHTML = Number(movesNum.innerHTML)+1
+        
         break
     }
+    checkEndGame()
     // 
 
 }
@@ -311,12 +319,11 @@ async function solve(){
     console.log("startGame",startGame);
     if(!startGame)
     {
-    startGame = true
+    startGame = true    
     disableBtn()
     let sol = TowerOfHanoiGreedyAlgorithm(Towers,[[],[],[...Towers[0]]])
     console.log("Solution", sol);
-    let from
-    let to
+    
     // 
     for(let i =0 ;i<sol.length ;i++){
         console.log(sol[i]);
@@ -369,6 +376,7 @@ function getCheckedMode(){
         hintBtn.style.display ='flex'
         slidecontainer.style.display ='none'
         Algorithm.style.display ='none'
+        header.style.flexDirection = "row"
         initListener()
         
     }
@@ -379,6 +387,7 @@ function getCheckedMode(){
         solveBtn.style.display ='flex'
         hintBtn.style.display ='none'
         Algorithm.style.display ='flex'
+        header.style.flexDirection = "column"
         removeListener()
         
     }
