@@ -268,6 +268,8 @@ async function moveRing(tourStart,tourEnd){
 async function hint(){
     if(!hintAction)
     {
+        startGame = true    
+        disableBtn()
         hintAction =true
         let hintArr =[[],[],[]]
     for(let i=0 ; i<tours[0].children.length;i++)
