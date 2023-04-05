@@ -130,28 +130,3 @@ export const TowerOfHanoiGreedyAlgorithm = (Towers,goal) => {
 // 
 // let Towers=[[6,5,4,3,2,1],[],[]]
 // TowerOfHanoiGreedyAlgorithm(Towers);
-export default TowerOfHanoiGreedyAlgorithm;
-
-
- // const finalPath = (tree) => {
-  //   let path = [];
-  //   let x = [];
-    
-  //   for (let i = tree.length - 1; i >= 0; i--) {
-  //     if (i === tree.length - 1) {
-  //       path.unshift(tree[i][0]);
-  //       x = tree[i][1];
-  //     } else if (i === 0) {
-  //       path.unshift(tree[i][0]);
-  //       path.unshift(tree[i][1]);
-  //     } else if (areSame(x, tree[i][0])) {
-  //       path.unshift(tree[i][0]);
-  //       x = tree[i][1];
-  //       if(areSame(Towers, tree[i][1])){//resolve problem
-  //         path.unshift(tree[i][1]);
-  //         break;
-  //       }
-  //     }
-  //   }
-  //   return path;
-  // };

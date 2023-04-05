@@ -1,4 +1,5 @@
 import {TowerOfHanoiGreedyAlgorithm} from './Greedy.js'
+import { TowerOfHanoiA_star } from './A-star.js';
 const Towers = [[3,2,1], [], []];
 const rings = document.getElementsByClassName('ring')
 const tours = document.getElementsByClassName('ring-container')
@@ -288,8 +289,7 @@ async function hint(){
         hintArr[2].unshift(widthsize)
     }
     console.log(hintArr);
-    let sol = TowerOfHanoiGreedyAlgorithm(hintArr,[[],[],[...Towers[0]]])
-    
+    let sol = TowerOfHanoiGreedyAlgorithm(hintArr,[[],[],[...Towers[0]]]);
     // 
     for(let i =0 ;i<sol.length - 1 ;i++){
         for (let j=0 ; j< 3 ; j++){
@@ -321,7 +321,12 @@ async function solve(){
     {
     startGame = true    
     disableBtn()
-    let sol = TowerOfHanoiGreedyAlgorithm(Towers,[[],[],[...Towers[0]]])
+    let sol;
+    if(aStar.checked){
+        sol = TowerOfHanoiA_star(Towers,[[],[],[...Towers[0]]])
+    }else if(Greedy.checked){
+        sol = TowerOfHanoiGreedyAlgorithm(Towers,[[],[],[...Towers[0]]])
+    }
     console.log("Solution", sol);
     
     // 

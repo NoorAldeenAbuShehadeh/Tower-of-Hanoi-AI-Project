@@ -1,44 +1,60 @@
-const TowerOfHanoiA_star = (Towers, goal) => {
+export const TowerOfHanoiA_star = (Towers, goal) => {
   const A_star = (Towers) => {
     let closeList = [];
     let openList = [Towers];
+    let ListH=[heuristic(Towers,goal[2].length)];
+    let ListG=[0];
     let parent_Child = [];
-    const goal = [[], [], Towers[0]];
     if (openList.length == 0) return null;
 
     while (openList.length > 0) {
-      let n = best_F(openList, parent_Child, goal[2].length); //Towers[0].length : number of rings (3-6)
+      let n = best_F(openList, ListH, ListG); //Towers[0].length : number of rings (3-6)
       if (areSame(n, goal)) { //if arrive to goal return the path
         closeList.push(n);
+        console.log("Tested path length A*",closeList.length);//tested path
         return parent_Child;
       }
       let expanded = expand(n);
       for (const element of expanded) {
-        let exsist = false;
+        let exists = false;
         for (let i = 0; i < closeList.length; i++) {
           if (areSame(element, closeList[i])) {
-            exsist = true;
+            exists = true;
           }
         }
         for (let i = 0; i < openList.length; i++) {
           if (areSame(element, openList[i])) {
-            exsist = true;
+            exists = true;
           }
         }
-        if (!exsist) {
+        if (!exists) {
           openList.push(element);
           parent_Child.push([[...element], [...n]]); //need to set n as parent of this element
+          ListH.push(heuristic(element,goal[2].length))
+          ListG.push(gCost(element,parent_Child))
         }
         else{
             if(gCost(element,parent_Child) > gCost(element,[...parent_Child,[element,n]])){
                 openList.push(element);
                 parent_Child.push([[...element], [...n]]);
-                closeList = closeList.filter((e) => !areSame(e, element));
+                closeList = closeList.filter((e,index) => {
+                  if(!areSame(e, element))return e;
+                  else {
+                    ListG.splice(index,1)
+                    ListH.splice(index,1)
+                  }
+                });
             }
         }
       }
 
-      openList = openList.filter((element) => !areSame(element, n));
+      openList = openList.filter((e,index) => {
+        if(!areSame(e, n))return e;
+        else {
+          ListG.splice(index,1)
+          ListH.splice(index,1)
+        }
+      });
       closeList.push(n);
     }
   };
@@ -57,7 +73,7 @@ const TowerOfHanoiA_star = (Towers, goal) => {
     let cg = 0;
     let parent = [];
     for (let i = parent_Child.length - 1; i >= 0; i--) {
-      if (areSame(element, parent_Child[0][1])) break;
+      if (areSame(element, parent_Child[0][1])) break;//arrive to root 
       if (areSame(parent_Child[i][0], element)) {
         found = true;
         parent = parent_Child[i][1];
@@ -74,27 +90,17 @@ const TowerOfHanoiA_star = (Towers, goal) => {
     return cg;
   };
 
-  let best_F = (openList, parent_Child, n) => {
-    let count = [];
-    let h = [],
-      g = [];
-    for (const element of openList) {
-      let c = heuristic(element,n);
-      h.push(c);
+  let best_F = (openList, ListH, ListG) => {
 
-      let cg = gCost(element, parent_Child);
-      g.push(cg);
-      count.push([c, cg]);
-    }
     let best = openList[0];
-    let min = count[0];
-    for (let i = 0; i < count.length; i++) {
-      if (count[i][0] + count[i][1] < min[0] + min[1]) {
-        min = count[i];
+    let min = [ListH[0],ListG[0]];
+    for (let i = 0; i < ListH.length; i++) {
+      if (ListH[i] + ListG[i] < min[0] + min[1]) {
+        min = [ListG[i],ListH[i]]
         best = openList[i];
-      } else if (count[i][0] + count[i][1] === min[0] + min[1]) {
-        if (count[i][0] < min[0]) {
-          min = count[i];
+      } else if (ListH[i] + ListG[i] < min[0] + min[1]) {
+        if (ListH[i] < min[0]) {
+          min = [ListG[i],ListH[i]];
           best = openList[i];
         }
       }
@@ -154,12 +160,11 @@ const TowerOfHanoiA_star = (Towers, goal) => {
 
   let tree = A_star(Towers);
   let path = finalPath(tree);
-  console.log(path.length - 1);
-  console.log(path);
+  // console.log(path.length - 1);
+  // console.log(path);
 
   return path;
 };
-//
-let Towers=[[6,5,4,3,2,1],[],[]]
-TowerOfHanoiA_star(Towers);
-// export default TowerOfHanoiA_star;
+
+// let Towers=[[6,5,4,3,2,1],[],[]]
+// TowerOfHanoiA_star(Towers,[[],[],Towers[0]]);
