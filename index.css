@@ -126,12 +126,15 @@ label{
     background-color: #dd4433;
     width: 5px;
     height: 250px;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
     /* display: flex; */
 }
 .horizontal{
     background-color: #dd4433;
     width: 350px;
-    height: 5px;
+    height: 10px;
+    border-radius: 20px;
 }
 
 .ring{
@@ -145,7 +148,7 @@ label{
 }
 .ring-container{
     position: absolute;
-    bottom: 5px;
+    bottom: 10.5px;
     /* border: 1px solid aqua; */
     display: flex;
     flex-direction: column;

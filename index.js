@@ -30,7 +30,7 @@ const widthRingUnit = 35
 const ringColor = ['#774f9b','#43afe2','#fae50e','#f96c0d','#e24ba5','#c0504e']
 let from
 let to
-
+let hintAction = false
 // const GreedyPath = TowerOfHanoiGreedyAlgorithm(Towers); //applay algorithm
 // console.log(GreedyPath);
 
@@ -266,7 +266,10 @@ async function moveRing(tourStart,tourEnd){
     // },((2.3-executeSpeed.innerHTML)*500*3))
 }
 async function hint(){
-    let hintArr =[[],[],[]]
+    if(!hintAction)
+    {
+        hintAction =true
+        let hintArr =[[],[],[]]
     for(let i=0 ; i<tours[0].children.length;i++)
     {
         let widthsize = tours[0].children[i].style.width
@@ -312,7 +315,10 @@ async function hint(){
         break
     }
     checkEndGame()
-    // 
+    //
+    hintAction=false
+    }
+     
 
 }
 async function solve(){
