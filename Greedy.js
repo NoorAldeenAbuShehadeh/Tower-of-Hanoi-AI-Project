@@ -4,6 +4,7 @@ export const TowerOfHanoiGreedyAlgorithm = (Towers,goal) => {
   const GreedyAlgorithm = (Towers) => {
     let closeList = [];
     let openList = [Towers];
+    let ListH = [heuristic(Towers,goal[2].length)]
     let parent_Child = [];
     // const goal = [[], [], Towers[0]];
     if (openList.length == 0) return null;
@@ -11,50 +12,58 @@ export const TowerOfHanoiGreedyAlgorithm = (Towers,goal) => {
     console.log("Towers",Towers);
     console.log("goal",goal);
     while (openList.length > 0) {
-      let n = best_Huristic(openList, goal[2].length); //Towers[0].length : number of rings (3-6)
+      let n = best_Heuristic(openList, ListH); //Towers[0].length : number of rings (3-6)
       if (areSame(n, goal)) {
         //if arrive to goal return the path
         closeList.push(n);
+        console.log("Tested path length Greedy",closeList.length);//tested path
         return parent_Child;
       }
       let expanded = expand(n);
       for (const element of expanded) {
-        let exsist = false;
+        let exists = false;
         for (let i = 0; i < closeList.length; i++) {
           if (areSame(element, closeList[i])) {
-            exsist = true;
+            exists = true;
           }
         }
         for (let i = 0; i < openList.length; i++) {
           if (areSame(element, openList[i])) {
-            exsist = true;
+            exists = true;
           }
         }
-        if (!exsist) {
+        if (!exists) {
           openList.push(element);
+          ListH.push(heuristic(element,goal[2].length))
           parent_Child.push([[...element], [...n]]); //need to set n as parent of this element
         }
       }
-      openList = openList.filter((element) => !areSame(element, n));
+      openList = openList.filter((e,index) => {
+        if(!areSame(e, n))return e;
+        else {
+          ListH.splice(index,1)
+        }
+      });
       closeList.push(n);
     }
   };
 
-  let best_Huristic = (openList, n) => {
-    let count = [];
-    for (const element of openList) {
-      let c = element[0].length + element[1].length;
-      for (let i = 0; i < element[2].length; i++) {
-        if (element[2][i] !== n - i) c++;
-      }
-      //let c=element[0]*2+element[1];//another heuristic function
-      count.push(c);
+  const heuristic = (element,n) => {
+    let c = element[0].length + element[1].length;
+    for (let i = 0; i < element[2].length; i++) {
+      if (element[2][i] !== n - i) c++;
     }
+    //let c=element[0]*2+element[1];//another heuristic function
+    return c;
+  };
+
+  let best_Heuristic = (openList, ListH) => {
+
     let best = openList[0];
-    let min = count[0];
-    for (let i = 0; i < count.length; i++) {
-      if (count[i] < min) {
-        min = count[i];
+    let min = ListH[0];
+    for (let i = 0; i < ListH.length; i++) {
+      if (ListH[i] < min) {
+        min = ListH[i];
         best = openList[i];
       }
     }
