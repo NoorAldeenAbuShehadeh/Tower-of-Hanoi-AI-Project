@@ -31,8 +31,6 @@ const ringColor = ['#774f9b','#43afe2','#fae50e','#f96c0d','#e24ba5','#c0504e']
 let from
 let to
 let hintAction = false
-// const GreedyPath = TowerOfHanoiGreedyAlgorithm(Towers); //applay algorithm
-// console.log(GreedyPath);
 
 function ringListener(ringObj){
     ringObj.addEventListener('dragstart',dragStart)
@@ -81,8 +79,6 @@ function dragEnd(){
     dragItem = null;
 }
 function checkEndGame(){
-    // console.log(Number(numRing.innerText));
-    // console.log(tours[2])
     let getGoal= true;
         for (let i = 0 ; i < tours[2].children.length -1 ; i++)
         {
@@ -90,8 +86,6 @@ function checkEndGame(){
             firstEl = Number(firstEl.substring(0,firstEl.length-2))
             let secoundEl = tours[2].children[i+1].style.width;
             secoundEl = Number(secoundEl.substring(0,secoundEl.length-2))
-            // console.log('firstEl------------------',firstEl);
-            // console.log('secoundEl',secoundEl);
             if(firstEl > secoundEl)
             {
                 getGoal=false;
@@ -164,11 +158,6 @@ function initRing(){
         rings[i].style.width = String(widthRingUnit*(i+1))+"px"
         rings[i].style.backgroundColor = ringColor[i]
     }
-    
-    // rings[1].style.width = String(widthRingUnit*2)+"px"
-    // rings[1].style.backgroundColor = ringColor[1]
-    // rings[2].style.width = String(widthRingUnit*3)+"px"
-    // rings[2].style.backgroundColor = ringColor[2]
 }
 function addRing()
 {
@@ -184,20 +173,6 @@ function addRing()
             tmp.style.width = String(35*(Number(numRing.innerText)))+"px"
             tmp.style.backgroundColor = ringColor[Number(numRing.innerText)-1]
             minMov.innerHTML = `Minimum Number of Movement: ${(2**Number(numRing.innerText))-1}`
-            // console.log(minMov);
-            // if(numRing.innerText == 4 )
-            // {
-            //     tmp.style.width="140px"
-            // }
-            // else if(numRing.innerText == 5 )
-            // {
-            //     tmp.style.width="175px"
-            // }
-            // else if(numRing.innerText == 6 )
-            // {
-            //     tmp.style.width="210px"
-            // }
-            
             tours[0].append(tmp)
         }
         else{
@@ -240,55 +215,46 @@ function delay(ms)
 }
 async function moveRing(tourStart,tourEnd){
     let node = tours[tourStart].children[0]
-    // setTimeout(()=>node.style.display ='none',0);
-    
-    // setTimeout(()=>{
+
         node.style.display ='none'
         areas[tourStart].append(node)
         node.style.display ='block'
         await delay(500/executeSpeed.innerHTML)
-    // },((2.3-executeSpeed.innerHTML)*500))
-    // setTimeout(()=>node.style.display ='block',500);
-    
-    // setTimeout(()=>this.style.display ='block',0);
-    // setTimeout(()=>{
+
         node.style.display ='none'
         areas[tourEnd].append(node)
         node.style.display ='block'
         await delay(500/executeSpeed.innerHTML)
-    // },((2.3-executeSpeed.innerHTML)*500*2))
 
-    // setTimeout(()=>{
         node.style.display ='none'
         tours[tourEnd].prepend(node)
         node.style.display ='block'
         await delay(500/executeSpeed.innerHTML)
-    // },((2.3-executeSpeed.innerHTML)*500*3))
+
 }
 async function hint(){
     if(!hintAction)
     {
+        startGame = true    
+        disableBtn()
         hintAction =true
         let hintArr =[[],[],[]]
     for(let i=0 ; i<tours[0].children.length;i++)
     {
         let widthsize = tours[0].children[i].style.width
         widthsize = (Number(widthsize.slice(0, -2))/widthRingUnit); 
-        // console.log("0",widthsize);
         hintArr[0].unshift(widthsize)
     }
     for(let i=0 ; i<tours[1].children.length;i++)
     {
         let widthsize = tours[1].children[i].style.width
         widthsize = (Number(widthsize.slice(0, -2))/widthRingUnit); 
-        // console.log("1",widthsize);
         hintArr[1].unshift(widthsize)
     }
     for(let i=0 ; i<tours[2].children.length;i++)
     {
         let widthsize = tours[2].children[i].style.width
         widthsize = (Number(widthsize.slice(0, -2))/widthRingUnit); 
-        // console.log("2",widthsize);
         hintArr[2].unshift(widthsize)
     }
     console.log(hintArr);
@@ -333,21 +299,15 @@ async function solve(){
     }else if(Greedy.checked){
         sol = TowerOfHanoiGreedyAlgorithm(Towers,[[],[],[...Towers[0]]])
     }
-    console.log("Solution", sol);
+    // console.log("Solution", sol);
     
     // 
-    for(let i =0 ;i<sol.length ;i++){
-        console.log(sol[i]);
-    }
+    // for(let i =0 ;i<sol.length ;i++){
+    //     console.log(sol[i]);
+    // }
     //
     for(let i =0 ;i<sol.length - 1 ;i++){
-        // console.log("+++++++++++++++++++++++++++++");
-        // console.log(sol[i][0].length,"+",sol[i][1].length,"+",sol[i][2].length)
-        // console.log(sol[i+1][0].length,"+",sol[i+1][1].length,"+",sol[i+1][2].length)
-        // console.log(sol[i][0].length - sol[i+1][0].length,"+",sol[i][1].length - sol[i+1][1].length,"+",sol[i][2].length - sol[i+1][2].length)
-        // // 1 from ==== -1 to
-        
-        // setTimeout(()=>{
+
         for (let j=0 ; j< 3 ; j++){
             if( sol[i][j].length - sol[i+1][j].length === 1 ){
                 from = j
@@ -357,17 +317,13 @@ async function solve(){
                 to = j 
             }
         }
-    //     // console.log("+++++++++++++++++++++++++++++");
 
-    //     // break
         console.log(from,"-->",to)
         workStatus.innerHTML = `Move Disk from Tower ${from} to Tower ${to}`
         await moveRing(from,to)
         
         movesNum.innerHTML = Number(movesNum.innerHTML)+1
-    // },(1700*i))//2.5-executeSpeed.innerHTML
-        
-        // setTimeout(()=>{moveRing(from,to)},1500*i)
+
         
     }
     workStatus.innerHTML ="Game finish successfully 🎉"
@@ -413,7 +369,6 @@ function speedControl()
     let val = this.value/100
     executeSpeed.innerHTML = val.toFixed(2)
     
-    // console.log((executeSpeed.innerHTML)*1500,((executeSpeed.innerHTML)*1500)/3)
 }
 function removeRingListener(ringObj){
     ringObj.removeEventListener('dragstart',dragStart)
@@ -440,5 +395,4 @@ function removeListener(){
 initListener()
 initRing()
 getCheckedMode()
-// removeListener()
   

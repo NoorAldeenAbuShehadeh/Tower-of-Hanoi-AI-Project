@@ -12,6 +12,7 @@ export const TowerOfHanoiA_star = (Towers, goal) => {
       if (areSame(n, goal)) { //if arrive to goal return the path
         closeList.push(n);
         console.log("Tested path length A*",closeList.length);//tested path
+        console.log("Test Array",closeList);
         return parent_Child;
       }
       let expanded = expand(n);
@@ -161,7 +162,7 @@ export const TowerOfHanoiA_star = (Towers, goal) => {
   let tree = A_star(Towers);
   let path = finalPath(tree);
   // console.log(path.length - 1);
-  // console.log(path);
+  console.log("Solution Array",path);
 
   return path;
 };
