@@ -17,4 +17,4 @@ We also developed a user-friendly graphical user interface (GUI) using HTML, CSS
 Working on this project was a great learning experience for us, and we gained valuable insights into AI algorithms and problem-solving. We are excited to tackle more challenging problems with AI in the future! 🚀
 
 visit this link to try the game 🔥:
-https://momen-odeh.github.io/Tower-of-Hanoi-AI-Project
+https://nooraldeenabushehadeh.github.io/Tower-of-Hanoi-AI-Project/
